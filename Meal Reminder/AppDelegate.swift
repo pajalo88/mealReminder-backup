@@ -13,16 +13,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let vc = ViewController()
-    var fireFunction = NSTimer?()
-    
-    
-
+   
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
         
-        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
-
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
        
    
         // Override point for customization after application launch.
@@ -32,11 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         // Get some new data here
         
-        let timestamp = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .NoStyle, timeStyle: .ShortStyle)
-        
-        print(timestamp)
-
-        completionHandler(UIBackgroundFetchResult.NewData)
+       
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -51,14 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        let app = UIApplication.sharedApplication()
+       
         
-        let notificationSettings = UIUserNotificationSettings(forTypes:
-            [.Alert, .Sound], categories: nil)
-        
-        app.registerUserNotificationSettings(notificationSettings)
-        
-        let alertTime = NSDate().dateByAddingTimeInterval(10)
         
 //        func getTimeStamp(){
 //            
@@ -72,13 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        fireFunction = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("getTimeStamp"), userInfo: nil, repeats: true)
         
         
-        let notifyAlarm = UILocalNotification()
         
-        notifyAlarm.fireDate = alertTime
-        notifyAlarm.timeZone = NSTimeZone.defaultTimeZone()
-        notifyAlarm.soundName = "bell_tree.mp3"
-        notifyAlarm.alertBody = "Staff Meeting in 30 minutes"
-        app.scheduleLocalNotification(notifyAlarm)
        
         
 

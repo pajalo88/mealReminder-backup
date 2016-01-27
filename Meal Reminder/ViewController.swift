@@ -137,6 +137,16 @@ class ViewController: UIViewController, ADBannerViewDelegate, UIPopoverPresentat
         
         super.viewDidLoad()
         
+        let localNotification: UILocalNotification = UILocalNotification() // 1
+        localNotification.alertAction = "Membership Status" // 2
+        localNotification.alertBody = "Our system has detected that your membership is inactive." // 3
+        localNotification.fireDate = self.createDateWithTime(NSDate(), hour: 3, minute: 17) // 4
+        localNotification.category = "status" // 5
+        localNotification.userInfo = [ "cause": "inactiveMembership"] // 6
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        
+        
         
         
         fireFunction = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("stupid"), userInfo: nil, repeats: true)
@@ -153,6 +163,19 @@ class ViewController: UIViewController, ADBannerViewDelegate, UIPopoverPresentat
         
         
         
+    }
+    
+    func createDateWithTime(date: NSDate, hour: Int, minute: Int) -> NSDate
+    {
+        let today = date
+        let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let dateComponents = gregorian.components([.Year, .Month, .Day], fromDate: today)
+        
+        dateComponents.hour = hour;
+        dateComponents.minute = minute;
+        
+        let todayAtX = gregorian.dateFromComponents(dateComponents)
+        return todayAtX!
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
